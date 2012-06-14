@@ -77,8 +77,12 @@ class Earth():
             link = submission.url
             reddit_link = submission.permalink
             self.places_count = self.places_count + 1
-            link = self.clean_link(str(link))
-            formatted_title = re.sub(',|\.', '', title)
+            try:
+	    	link = self.clean_link(str(link))
+            except:
+		#Selenium probably threw an exception, so just skip this entry
+		return
+	    formatted_title = re.sub(',|\.', '', title)
             formatted_title = (re.sub('\s+(?=\S+)', '+', formatted_title)).encode("ascii", "ignore")
             
             url = 'https://maps.googleapis.com/maps/api/geocode/json?address='+formatted_title+'&sensor=false'
