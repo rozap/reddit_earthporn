@@ -10,7 +10,7 @@ import json
 import MySQLdb as mdb
 import sys
 from selenium import webdriver
-
+from pyvirtualdisplay import Display
 
 class Earth():
     
@@ -18,15 +18,17 @@ class Earth():
     places_count = 0
     places_found = 0
     browser = None
-
+    display = None
 
     def __init__(self):
-        self.browser = webdriver.Firefox()
+        self.display = Display(visible = 0, size=(800, 600))
+	self.display.start()
+	self.browser = webdriver.Firefox()
 
     def init_db(self):
         try:
-            self.db = mdb.connect('localhost', 'USER', 
-                'PASSWORD', 'earth')
+            self.db = mdb.connect('localhost', 'root', 
+                'PASS', 'earth')
             
             self.db.query("SELECT VERSION()")
             result = self.db.use_result()
@@ -124,7 +126,7 @@ class Earth():
         
     def cleanup(self):
         self.browser.close()
-
+	self.display.stop()
 
 
 
