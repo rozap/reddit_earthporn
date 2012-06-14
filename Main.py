@@ -139,10 +139,14 @@ class Earth():
 
 def main():
     print "Starting Earth"
-    earth = Earth()
-    earth.init_db()
-    earth.read_reddit()
-    earth.cleanup()
+    try:
+    	earth = Earth()
+    	earth.init_db()
+    	earth.read_reddit()
+    except:
+	pass
+    if earth != None:
+    	earth.cleanup()
 
 
 if __name__ == '__main__':
